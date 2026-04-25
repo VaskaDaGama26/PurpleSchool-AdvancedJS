@@ -1,18 +1,48 @@
-const rollDice = (dice) => {
-  const diceTypes = { d4: 4, d6: 6, d8: 8, d10: 10, d12: 12, d16: 16, d20: 20 };
-
-  if (!diceTypes.hasOwnProperty(dice))
-    return `Undefined type, available types: ${Object.keys(diceTypes).join(
-      ", "
-    )}`;
-
-  const currentDice = diceTypes[dice];
-
-  return Math.floor(Math.random() * currentDice + 1);
-};
-
-console.log(rollDice("example"));
-console.log(rollDice(2));
-console.log(rollDice([]));
-console.log(rollDice("d4"));
-console.log(rollDice("d20"));
+const users = [
+    {
+      name: "userInvalid",
+      birthday: [],
+    },
+    {
+      name: "user1",
+      birthday: "2020-01-12",
+    },
+    {
+      name: "user2",
+      birthday: "2001-09-30",
+    },
+    {
+      name: "user3",
+      birthday: "1982-03-07",
+    },
+    {
+      name: "user4",
+      birthday: "2040-05-08",
+    },
+  ];
+  
+  const isAdult = (user) => {
+    if (typeof user.birthday !== "string")
+      return `Неверный тип данных даты рождения`;
+  
+    const today = new Date();
+    const birthday = new Date(user.birthday);
+  
+    if (birthday.getFullYear() > today.getFullYear())
+      return `Год рождения не может превышать нынешний год`;
+  
+    let age = today.getFullYear() - birthday.getFullYear();
+    const monthDiff = today.getMonth() - birthday.getMonth();
+  
+    let finalAge =
+      monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())
+        ? --age
+        : age;
+  
+    return finalAge >= 14;
+  };
+  
+  users.forEach((user) => {
+    console.log(isAdult(user));
+  });
+  
