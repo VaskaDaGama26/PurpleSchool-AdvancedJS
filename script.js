@@ -1,4 +1,4 @@
-const NewYearTimer = () => {
+const NewYearTimer = (element) => {
   const now = new Date();
   const currentYear = now.getFullYear();
 
@@ -20,12 +20,13 @@ const NewYearTimer = () => {
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  console.clear();
-  console.log(
-    `До нового года: ${months} месяцев, ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`
-  );
+  element.innerText = `До нового года: ${months} месяцев, ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
 };
 
-setInterval(() => {
-  NewYearTimer();
-}, 1000);
+document.addEventListener("DOMContentLoaded", () => {
+  const timer = document.querySelector("[data-timer]");
+
+  setInterval(() => {
+    NewYearTimer(timer);
+  }, 1000);
+});
