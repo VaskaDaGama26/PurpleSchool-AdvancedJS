@@ -1,48 +1,31 @@
-const users = [
-    {
-      name: "userInvalid",
-      birthday: [],
-    },
-    {
-      name: "user1",
-      birthday: "2020-01-12",
-    },
-    {
-      name: "user2",
-      birthday: "2001-09-30",
-    },
-    {
-      name: "user3",
-      birthday: "1982-03-07",
-    },
-    {
-      name: "user4",
-      birthday: "2040-05-08",
-    },
-  ];
-  
-  const isAdult = (user) => {
-    if (typeof user.birthday !== "string")
-      return `Неверный тип данных даты рождения`;
-  
-    const today = new Date();
-    const birthday = new Date(user.birthday);
-  
-    if (birthday.getFullYear() > today.getFullYear())
-      return `Год рождения не может превышать нынешний год`;
-  
-    let age = today.getFullYear() - birthday.getFullYear();
-    const monthDiff = today.getMonth() - birthday.getMonth();
-  
-    let finalAge =
-      monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())
-        ? --age
-        : age;
-  
-    return finalAge >= 14;
-  };
-  
-  users.forEach((user) => {
-    console.log(isAdult(user));
-  });
-  
+const NewYearTimer = () => {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+
+  var newYear = new Date(currentYear + 1, 0, 1, 0, 0, 0);
+  const diff = newYear - now;
+
+  let months =
+    (newYear.getFullYear() - now.getFullYear()) * 12 +
+    (newYear.getMonth() - now.getMonth());
+  let days = newYear.getDate() - now.getDate();
+
+  if (days < 0) {
+    months--;
+    const lastMonth = new Date(newYear.getFullYear(), newYear.getMonth(), 0);
+    days += lastMonth.getDate();
+  }
+
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  console.clear();
+  console.log(
+    `До нового года: ${months} месяцев, ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`
+  );
+};
+
+setInterval(() => {
+  NewYearTimer();
+}, 1000);
